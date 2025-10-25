@@ -1,12 +1,10 @@
-// src/components/SimilarJobCard/index.js
-
 import {BsFillBriefcaseFill} from 'react-icons/bs'
 import {IoLocationSharp} from 'react-icons/io5'
 import {AiFillStar} from 'react-icons/ai'
 import './index.css'
 
 const SimilarJobCard = props => {
-  const {similarJobData} = props
+  const {jobDetails} = props
   const {
     title,
     companyLogoUrl,
@@ -14,7 +12,7 @@ const SimilarJobCard = props => {
     rating,
     employmentType,
     jobDescription,
-  } = similarJobData
+  } = jobDetails
 
   return (
     <li className="similar-job-card">

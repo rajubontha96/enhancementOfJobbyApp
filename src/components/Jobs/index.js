@@ -1,6 +1,8 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
+import {BsSearch} from 'react-icons/bs'
+import Header from '../Header'
 import JobCard from '../JobCard'
 import FiltersGroup from '../FiltersGroup'
 import ProfileCard from '../ProfileCard'
@@ -20,6 +22,7 @@ class Jobs extends Component {
     employmentType: [],
     minimumPackage: '',
     searchInput: '',
+    locations: [],
   }
 
   componentDidMount() {
@@ -61,16 +64,30 @@ class Jobs extends Component {
     }
   }
 
+  filterJobsByLocation = () => {
+    const {jobsList, locations} = this.state
+
+    if (locations.length === 0) {
+      return jobsList
+    }
+
+    return jobsList.filter(job =>
+      locations.some(location =>
+        job.location.toLowerCase().includes(location.toLowerCase()),
+      ),
+    )
+  }
+
   renderLoader = () => (
     <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
     </div>
   )
 
   renderJobsList = () => {
-    const {jobsList} = this.state
+    const filteredJobs = this.filterJobsByLocation()
 
-    if (jobsList.length === 0) {
+    if (filteredJobs.length === 0) {
       return (
         <div className="no-jobs-container">
           <img
@@ -88,7 +105,7 @@ class Jobs extends Component {
 
     return (
       <ul className="jobs-list">
-        {jobsList.map(job => (
+        {filteredJobs.map(job => (
           <JobCard key={job.id} jobDetails={job} />
         ))}
       </ul>
@@ -132,6 +149,14 @@ class Jobs extends Component {
     this.setState({minimumPackage: id}, this.getJobs)
   }
 
+  onChangeLocations = id => {
+    this.setState(prevState => ({
+      locations: prevState.locations.includes(id)
+        ? prevState.locations.filter(location => location !== id)
+        : [...prevState.locations, id],
+    }))
+  }
+
   onChangeSearchInput = event => {
     this.setState({searchInput: event.target.value})
   }
@@ -140,41 +165,54 @@ class Jobs extends Component {
     this.getJobs()
   }
 
+  onKeyDownSearch = event => {
+    if (event.key === 'Enter') {
+      this.getJobs()
+    }
+  }
+
   render() {
     const {apiStatus, searchInput} = this.state
 
     return (
-      <div className="jobs-route-container">
-        <div className="left-section">
-          <ProfileCard />
-          <FiltersGroup
-            updateEmploymentTypes={this.onChangeEmploymentType}
-            updateSalaryRange={this.onChangeSalaryRange}
-          />
-        </div>
-        <div className="right-section">
-          <div className="search-container">
-            <input
-              type="search"
-              className="search-input"
-              placeholder="Search"
-              value={searchInput}
-              onChange={this.onChangeSearchInput}
+      <>
+        <Header />
+        <div className="jobs-route-container">
+          <div className="sidebar-section">
+            <ProfileCard />
+            <FiltersGroup
+              updateEmploymentTypes={this.onChangeEmploymentType}
+              updateSalaryRange={this.onChangeSalaryRange}
+              updateLocations={this.onChangeLocations}
             />
-            <button
-              type="button"
-              className="search-button"
-              onClick={this.onSearch}
-              data-testid="searchButton"
-            >
-              🔍
-            </button>
           </div>
-          {apiStatus === apiStatusConstants.inProgress && this.renderLoader()}
-          {apiStatus === apiStatusConstants.success && this.renderJobsList()}
-          {apiStatus === apiStatusConstants.failure && this.renderFailureView()}
+          <div className="jobs-content-section">
+            <div className="search-container">
+              <input
+                type="search"
+                className="search-input"
+                placeholder="Search jobs by title, company, or keyword"
+                value={searchInput}
+                onChange={this.onChangeSearchInput}
+                onKeyDown={this.onKeyDownSearch}
+              />
+              <button
+                type="button"
+                className="search-button"
+                onClick={this.onSearch}
+                data-testid="searchButton"
+                aria-label="Search"
+              >
+                <BsSearch className="search-icon" />
+              </button>
+            </div>
+            {apiStatus === apiStatusConstants.inProgress && this.renderLoader()}
+            {apiStatus === apiStatusConstants.success && this.renderJobsList()}
+            {apiStatus === apiStatusConstants.failure &&
+              this.renderFailureView()}
+          </div>
         </div>
-      </div>
+      </>
     )
   }
 }

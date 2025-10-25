@@ -1,4 +1,3 @@
-// src/components/JobCard/index.js
 import {Link} from 'react-router-dom'
 import {AiFillStar} from 'react-icons/ai'
 import {IoLocationSharp} from 'react-icons/io5'
@@ -25,7 +24,7 @@ const JobCard = props => {
         <div className="job-card-header">
           <img
             src={companyLogoUrl}
-            alt="website logo"
+            alt="company logo"
             className="job-company-logo"
             role="img"
           />

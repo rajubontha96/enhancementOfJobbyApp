@@ -1,70 +1,94 @@
 .home-container {
   min-height: 100vh;
-  background-color: #f8fafc;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: 'Roboto', sans-serif;
 }
 
-.nav-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 16px 32px;
-  border-bottom: 1px solid #d7dfe9;
-}
-
-.website-logo {
-  height: 40px;
-}
-
-.nav-menu {
-  display: flex;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.nav-link {
-  margin: 0 12px;
-  color: #475569;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.logout-button {
-  padding: 8px 16px;
-  background-color: #4f46e5;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
 .home-content {
-  padding: 48px 32px;
-  max-width: 900px;
+  padding: 80px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 70px;
 }
 
 .home-heading {
-  font-size: 36px;
-  color: #1e293b;
-  margin-bottom: 16px;
+  font-size: 48px;
+  color: #ffffff;
+  margin-bottom: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .home-description {
-  font-size: 18px;
-  color: #475569;
-  margin-bottom: 24px;
+  font-size: 20px;
+  color: #f1f5f9;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .find-jobs-button {
-  padding: 12px 24px;
-  background-color: #4f46e5;
-  color: #ffffff;
-  font-size: 16px;
+  padding: 16px 40px;
+  background-color: #ffffff;
+  color: #4f46e5;
+  font-size: 18px;
+  font-weight: 600;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.find-jobs-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.find-jobs-button:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .home-content {
+    padding: 60px 24px;
+  }
+
+  .home-heading {
+    font-size: 36px;
+  }
+
+  .home-description {
+    font-size: 18px;
+  }
+
+  .find-jobs-button {
+    padding: 14px 32px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-content {
+    padding: 40px 16px;
+  }
+
+  .home-heading {
+    font-size: 28px;
+  }
+
+  .home-description {
+    font-size: 16px;
+  }
+
+  .find-jobs-button {
+    padding: 12px 24px;
+    font-size: 15px;
+  }
 }
