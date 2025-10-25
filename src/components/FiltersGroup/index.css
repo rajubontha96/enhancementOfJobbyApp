@@ -1,0 +1,16 @@
+.filters-group-container {
+  padding: 20px;
+  width: 250px;
+}
+
+.filters-heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+  color: #ffffff;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
